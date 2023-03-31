@@ -21,7 +21,7 @@ export async function getOpenAiReply(prompt) {
     presence_penalty: 0.6,
     stop: [' Human:', ' AI:'],
   })
-
+  console.log(JSON.stringify(response))
   const reply = markdownToText(response.data.choices[0].text)
   console.log('🚀🚀🚀 / reply', reply)
   return `${reply}\nvia ChatGPT`
