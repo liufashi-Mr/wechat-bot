@@ -14,22 +14,19 @@ export async function defaultMessage(msg, bot) {
   const content = msg.text() // 消息内容
   const room = msg.room() // 是否是群消息
   const roomName = (await room?.topic()) || null // 群名称
-  const alias = (await contact.alias()) || (await contact.name()) // 发消息人昵称
   const remarkName = await contact.alias() // 备注名称
   const name = await contact.name() // 微信名称
   const isText = msg.type() === bot.Message.Type.Text // 消息类型是否为文本
   const isRoom = roomWhiteList.includes(roomName) && content.includes(`${botName}`) // 是否在群聊白名单内并且艾特了机器人
   const isAlias = aliasWhiteList.includes(remarkName) || aliasWhiteList.includes(name) // 发消息的人是否在联系人白名单内
   const isBotSelf = botName === remarkName || botName === name // 是否是机器人自己
-  // TODO 你们可以根据自己的需求修改这里的逻辑
   if (isText && !isBotSelf) {
-    console.log(JSON.stringify(msg))
-    if ((Date.now() - 1e3 * msg.payload.timestamp) > 3000) return 
-    if (!content.startsWith('? ') && !content.startsWith('？ ') && !content.startsWith('> ')) return 
+    if (Date.now() - 1e3 * msg.payload.timestamp > 3000) return
+    // if (!content.startsWith('? ') && !content.startsWith('？ ') && !content.startsWith('> ')) return
+    console.log('11111111111111111111111111')
     try {
-      const trimed = content.substr(2)
-      if (trimed.length < 5) return 
-      
+      const trimed = content.substr(0)
+      console.log(isRoom, room, isAlias)
       // 区分群聊和私聊
       if (isRoom && room) {
         await room.say(await getReply(trimed.replace(`${botName}`, '')))
@@ -37,7 +34,15 @@ export async function defaultMessage(msg, bot) {
       }
       // 私人聊天，白名单内的直接发送
       if (isAlias && !room) {
-        await contact.say(await getReply(trimed))
+        try {
+        console.log('+++++')
+          const res = await getReply(trimed)
+          console.log(res, '-----')
+          await contact.say(res)
+        } catch (error) {
+          console.log(JSON.stringify(error));
+          contact.say('gpt助手离线')
+        }
       }
     } catch (e) {
       console.error(e)
