@@ -35,12 +35,12 @@ export async function defaultMessage(msg, bot) {
       // 私人聊天，白名单内的直接发送
       if (isAlias && !room) {
         try {
-        console.log('+++++')
+          console.log('+++++')
           const res = await getReply(trimed)
           console.log(res, '-----')
           await contact.say(res)
         } catch (error) {
-          console.log(JSON.stringify(error));
+          console.log(JSON.stringify(error))
           contact.say('gpt助手离线')
         }
       }
