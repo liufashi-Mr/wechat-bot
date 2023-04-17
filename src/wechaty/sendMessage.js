@@ -22,8 +22,6 @@ export async function defaultMessage(msg, bot) {
   const isBotSelf = botName === remarkName || botName === name // 是否是机器人自己
   if (isText && !isBotSelf) {
     if (Date.now() - 1e3 * msg.payload.timestamp > 3000) return
-    // if (!content.startsWith('? ') && !content.startsWith('？ ') && !content.startsWith('> ')) return
-    console.log('11111111111111111111111111')
     try {
       const trimed = content.substr(0)
       console.log(isRoom, room, isAlias)
@@ -34,18 +32,12 @@ export async function defaultMessage(msg, bot) {
       }
       // 私人聊天，白名单内的直接发送
       if (isAlias && !room) {
-        try {
-        console.log('+++++')
-          const res = await getReply(trimed)
-          console.log(res, '-----')
-          await contact.say(res)
-        } catch (error) {
-          console.log(JSON.stringify(error));
-          contact.say('gpt助手离线')
-        }
+        const res = await getReply(trimed)
+        await contact.say(res)
       }
     } catch (e) {
       console.error(e)
+      contact.say('gpt助手离线')
     }
   }
 }
@@ -111,7 +103,6 @@ async function trySay(talker, msg) {
  */
 async function splitMessage(text) {
   let realText = text
-  const item = text.split('- - - - - - - - - - - - - - -')
   if (item.length > 1) {
     realText = item[item.length - 1]
   }
