@@ -21,11 +21,11 @@ export async function defaultMessage(msg, bot) {
   const isAlias = aliasWhiteList.includes(remarkName) || aliasWhiteList.includes(name) // 发消息的人是否在联系人白名单内
   const isBotSelf = botName === remarkName || botName === name // 是否是机器人自己
   if (isText && !isBotSelf) {
-    console.log(Date.now() - 1e3 * msg.payload.timestamp, content)
     const trimed = content.substr(0)
     // 区分群聊和私聊
     if (isRoom && room) {
-      if (Date.now() - 1e3 * msg.payload.timestamp > 60000) return
+      console.log(Date.now() - 1e3 * msg.payload.timestamp, content, 'room')
+      if (Date.now() - 1e3 * msg.payload.timestamp > 100000) return
       try {
         console.log('🚀🚀🚀 / room', trimed)
         await room.say(await getReply(trimed.replace(`${botName}`, '')))
@@ -37,6 +37,7 @@ export async function defaultMessage(msg, bot) {
     }
     // 私人聊天，白名单内的直接发送
     if (isAlias && !room) {
+      console.log(Date.now() - 1e3 * msg.payload.timestamp, content)
       if (Date.now() - 1e3 * msg.payload.timestamp > 30000) return
       try {
         console.log('🚀🚀🚀 / talk', trimed)
