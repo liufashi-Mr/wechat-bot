@@ -2,7 +2,7 @@
 export const botName = 'gpt助手'
 
 // 群聊白名单，白名单内的群聊才会自动回复
-export const roomWhiteList = ['bot']
+export const roomWhiteList = ['bot','一家亲']
 
 // 联系人白名单，白名单内的联系人才会自动回复
 
