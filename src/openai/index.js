@@ -41,7 +41,7 @@ export async function getOpenAiReply(prompt) {
       reply = markdownToText(response.data.choices[0].message.content)
   }
   console.log('🚀🚀🚀 / reply', reply)
-  return `${reply}\nVia ${chosen_model}`
+  return `${reply}\n Reply from chat-gpt`
 }
 
 function markdownToText(markdown) {
