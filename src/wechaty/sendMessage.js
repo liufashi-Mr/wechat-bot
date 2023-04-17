@@ -25,7 +25,7 @@ export async function defaultMessage(msg, bot) {
     // 区分群聊和私聊
     if (isRoom && room) {
       console.log(Date.now() - 1e3 * msg.payload.timestamp, content, 'room')
-      if (Date.now() - 1e3 * msg.payload.timestamp > 100000) return
+      if (Date.now() - 1e3 * msg.payload.timestamp > 600000) return
       try {
         console.log('🚀🚀🚀 / room', trimed)
         await room.say(await getReply(trimed.replace(`${botName}`, '')))
