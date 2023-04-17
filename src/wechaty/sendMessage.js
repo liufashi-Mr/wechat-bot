@@ -21,23 +21,32 @@ export async function defaultMessage(msg, bot) {
   const isAlias = aliasWhiteList.includes(remarkName) || aliasWhiteList.includes(name) // 发消息的人是否在联系人白名单内
   const isBotSelf = botName === remarkName || botName === name // 是否是机器人自己
   if (isText && !isBotSelf) {
-    if (Date.now() - 1e3 * msg.payload.timestamp > 3000) return
-    try {
-      const trimed = content.substr(0)
-      console.log(isRoom, room, isAlias)
-      // 区分群聊和私聊
-      if (isRoom && room) {
+    console.log(Date.now() - 1e3 * msg.payload.timestamp, content)
+    if (Date.now() - 1e3 * msg.payload.timestamp > 60000) return
+    const trimed = content.substr(0)
+    // 区分群聊和私聊
+    if (isRoom && room) {
+      if (Date.now() - 1e3 * msg.payload.timestamp > 60000) return
+      try {
+        console.log('🚀🚀🚀 / room', trimed)
         await room.say(await getReply(trimed.replace(`${botName}`, '')))
         return
+      } catch (error) {
+        console.log(error)
+        room.say('gpt助手离线')
       }
-      // 私人聊天，白名单内的直接发送
-      if (isAlias && !room) {
+    }
+    // 私人聊天，白名单内的直接发送
+    if (isAlias && !room) {
+      if (Date.now() - 1e3 * msg.payload.timestamp > 30000) return
+      try {
+        console.log('🚀🚀🚀 / talk', trimed)
         const res = await getReply(trimed)
         await contact.say(res)
+      } catch (e) {
+        console.error(e)
+        contact.say('gpt助手离线')
       }
-    } catch (e) {
-      console.error(e)
-      contact.say('gpt助手离线')
     }
   }
 }
