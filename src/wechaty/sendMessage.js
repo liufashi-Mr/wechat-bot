@@ -22,7 +22,6 @@ export async function defaultMessage(msg, bot) {
   const isBotSelf = botName === remarkName || botName === name // 是否是机器人自己
   if (isText && !isBotSelf) {
     console.log(Date.now() - 1e3 * msg.payload.timestamp, content)
-    if (Date.now() - 1e3 * msg.payload.timestamp > 60000) return
     const trimed = content.substr(0)
     // 区分群聊和私聊
     if (isRoom && room) {
