@@ -5,4 +5,4 @@ export const botName = 'gpt助手'
 export const roomWhiteList = ['群名称']
 
 // 联系人白名单，白名单内的联系人才会自动回复
-export const aliasWhiteList = ['发狮', '心雨', '快骆肥宅水']
+export const aliasWhiteList = ['发狮', '心雨', '快骆肥宅水','发']
