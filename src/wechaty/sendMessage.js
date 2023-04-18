@@ -27,7 +27,6 @@ export async function defaultMessage(msg, bot) {
     const trimed = content.substr(0)
     // 区分群聊和私聊
     if (isRoom && room) {
-      console.log(room)
       try {
         console.log('🚀🚀🚀 / room', trimed)
         await room.say(await getReply(trimed.replace(`${botName}`, '')))
